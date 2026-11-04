@@ -33,7 +33,9 @@
 
 GitHub Actions-এ Chrome দিয়ে HTML starter-এর lint, browser check, MP4 render এবং সম্পূর্ণ decode সফল হয়েছে। ফলটি ৪ সেকেন্ড, ৯৬ ফ্রেম, 960×540 এবং 24 fps। মধ্যবর্তী ফ্রেমে বাংলা অক্ষর ও গ্রাফিক্স দেখা হয়েছে। একই run-এ ৩১টি Node পরীক্ষা, inventory ও FFmpeg smoke পরীক্ষা সফল। [পরীক্ষার ফল](https://github.com/istiaque-ahmed-2026/hyperframes/actions/runs/41838083912)
 
-ChatGPT-এর actual skill import ও তার নিজস্ব security review এখনও সম্পন্ন হয়নি।
+৪ নভেম্বর ২০২৬-এ পুরোনো full-bundle standalone প্যাকেজ actual installation safety scan-এ প্রত্যাখ্যাত হয়। Nested skill packaging ঠিক করার পরও safety scan ব্যর্থ হয়; নির্দিষ্ট কারণ জানানো হয়নি।
+
+এরপর provider credential readers, upload clients ও automatic installers বাদ দিয়ে ছোট standalone সংস্করণ তৈরি করা হয়। সেটি ChatGPT-এর প্রকৃত installation flow-তে গৃহীত হয় এবং পরবর্তী সংরক্ষিত অবস্থায় উপস্থিতি যাচাই করা হয়। `framecut/skill/` ও নতুন ZIP সেই গৃহীত সংস্করণের হুবহু export; server-generated display metadata-ও রাখা হয়েছে। এটি full plugin-এর অনুমোদন বা ভবিষ্যতের সব নিরাপত্তা পরীক্ষার নিশ্চয়তা নয়।
 
 Paid generation, avatar, voice cloning এবং সব তৃতীয় পক্ষের মডেল সরাসরি পরীক্ষা করা হয়নি। সেসবের জন্য উপলব্ধ provider, অনুমোদন ও প্রয়োজনীয় account access লাগে। npm package pin মূল runtime নির্ধারণ করে; এর মাধ্যমে সব transitive dependency-এর নিরাপত্তা নিশ্চিত হয় না। এই পর্যালোচনা পূর্ণ penetration test বা আনুষ্ঠানিক certification নয়।
 

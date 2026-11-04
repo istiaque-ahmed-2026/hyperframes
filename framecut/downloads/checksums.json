@@ -1,0 +1,7 @@
+{
+  "file": "framecut-video-skill.zip",
+  "sha256": "6a2b792013fa2fc382f5f6845574c17b8b1f3755f9de3ceddb13b2544bb9781c",
+  "files": 10,
+  "source": "framecut/skill",
+  "verification": "Byte-for-byte match to the stored accepted skill export."
+}

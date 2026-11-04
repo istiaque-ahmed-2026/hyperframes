@@ -4,6 +4,14 @@ A full source edition of HeyGen HyperFrames v0.9.9 with a separate, installable 
 
 [বাংলা ব্যবহারবিধি](framecut/README.bn.md) · [Sample title](framecut/title-card.mp4) · [Captioned edit](framecut/captioned-cut.mp4)
 
+### ChatGPT skill — accepted version
+
+Use [framecut-video-skill.zip](framecut/downloads/framecut-video-skill.zip?raw=true) for personal skill installation. The exact exported source is in [framecut/skill](framecut/skill/SKILL.md). Ask ChatGPT to install that specific folder, not every skill in this repository.
+
+This reduced standalone version was accepted through ChatGPT's actual skill installation flow on 2026-11-04. This records that installation result, not a universal security certification or a guarantee of future acceptance. The earlier full-bundle standalone package failed the safety scan and is superseded.
+
+The standalone skill includes local title/caption/trim tooling, Bengali fonts, a HyperFrames starter, and production guidance. It does not bundle provider credential readers, upload clients, or automatic dependency installers. Advanced rendering needs an approved available renderer; AI media generation needs an approved available service.
+
 ### Install this edition
 
 Open the extracted source folder in a terminal with Codex CLI. From the repository root run:
@@ -15,11 +23,7 @@ For installation from GitHub, use `istiaque-ahmed-2026/hyperframes` in place of 
 
 ### Standalone skill package
 
-For a host that imports individual Agent Skills, use `framecut-video-skill.zip`. It contains one root `framecut-video/SKILL.md` and its internal `bundle/` of references and helpers. Select the standalone skill in a compatible Skills interface, or give its repository source and request installation through the host-supported skill installer. Verify that `framecut-video` appears in the host before claiming installation.
-
-Build both archives from committed source with `python3 framecut/package.py --out-dir /path/to/output`. The output includes SHA-256 checksums. A standalone skill, a plugin archive and the full repository have different roots; use the archive intended for the receiving interface.
-
-Read the [review record](framecut/REVIEW.bn.md) for tested behavior and remaining checks. Host acceptance and third-party service access depend on that host's current features and permissions.
+Build archives from committed source with `python3 framecut/package.py --out-dir /path/to/output`. The standalone ZIP contains only `framecut-video/` with one SKILL.md. The separate legacy plugin is not the personal skill accepted by ChatGPT. See [the review record](framecut/REVIEW.bn.md) and [download checksums](framecut/downloads/checksums.json).
 
 ### Render and edit
 
