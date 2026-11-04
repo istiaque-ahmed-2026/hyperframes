@@ -1,0 +1,6 @@
+Framecut Studio is an independent adaptation of HeyGen HyperFrames v0.9.9.
+The nine bundled skills and launcher originate from heygen-com/hyperframes at
+12ce8c2ffd37757204afa0ab170df27e0a384162, under the included Apache License.
+This edition modifies the main skill, installation guidance and launcher.
+It adds a ChatGPT workflow, FFmpeg helper and Bengali starter composition.
+The Noto font has separate attribution in skills/hyperframes/starter/assets/FONT-LICENSE.txt.

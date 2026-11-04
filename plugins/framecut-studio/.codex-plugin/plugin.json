@@ -1,0 +1,18 @@
+{
+  "name": "framecut-studio",
+  "version": "0.9.9",
+  "description": "Create and edit videos with HyperFrames, Bengali typography, captioned trims and export checks.",
+  "license": "Apache-2.0",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Framecut Studio",
+    "shortDescription": "Create and edit video with HyperFrames",
+    "developerName": "Framecut Studio project",
+    "category": "Creativity",
+    "defaultPrompt": [
+      "বাংলা টাইটেল দিয়ে একটি ভিডিও বানাও",
+      "Trim my footage and add captions",
+      "Create an editable product launch film"
+    ]
+  }
+}

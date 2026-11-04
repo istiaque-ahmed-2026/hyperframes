@@ -1,0 +1,32 @@
+name: Framecut release check
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-noto-core
+      - run: python3 framecut/smoke.py
+      - name: Render the editable Bengali starter
+        env:
+          HYPERFRAMES_BROWSER_PATH: /usr/bin/google-chrome
+          PRODUCER_HEADLESS_SHELL_PATH: /usr/bin/google-chrome
+        run: |
+          project="$RUNNER_TEMP/field-notes"
+          cp -R plugins/framecut-studio/skills/hyperframes/starter "$project"
+          launcher="$PWD/plugins/framecut-studio/skills/hyperframes/scripts/plugin-cli.mjs"
+          cd "$project"
+          node "$launcher" lint .
+          node "$launcher" check . --json
+          node "$launcher" render . --strict --no-best-effort -w 1 -o "$RUNNER_TEMP/demo.mp4"
+          ffmpeg -v error -xerror -i "$RUNNER_TEMP/demo.mp4" -f null -
+      - uses: actions/upload-artifact@v4
+        with:
+          name: framecut-browser-render
+          path: ${{ runner.temp }}/demo.mp4

@@ -1,0 +1,20 @@
+{
+  "name": "framecut-tools",
+  "interface": {
+    "displayName": "Framecut Tools"
+  },
+  "plugins": [
+    {
+      "name": "framecut-studio",
+      "source": {
+        "source": "local",
+        "path": "./plugins/framecut-studio"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Creativity"
+    }
+  ]
+}

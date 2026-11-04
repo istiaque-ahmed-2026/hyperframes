@@ -1,3 +1,43 @@
+# Framecut Studio for ChatGPT
+
+A full source edition of HeyGen HyperFrames v0.9.9 with a separate, installable ChatGPT plugin. The rendering engine, Studio, registry, CLI and original nine skills remain in the repository. The independent Framecut plugin lives in `plugins/framecut-studio/`. It adds Bengali production guidance, attached-footage editing, a browser-independent FFmpeg path and an editable motion study.
+
+[বাংলা ব্যবহারবিধি](framecut/README.bn.md) · [Sample title](framecut/title-card.mp4) · [Captioned edit](framecut/captioned-cut.mp4)
+
+### Install this edition
+
+Open the extracted source folder in a terminal with Codex CLI. From the repository root run:
+
+    codex plugin marketplace add .
+    codex plugin add framecut-studio@framecut-tools
+
+For installation from GitHub, use `istiaque-ahmed-2026/hyperframes` in place of the dot, with `--ref main`. In a compatible ChatGPT desktop installation, use the local marketplace and select Framecut Studio. For a host with plugin ZIP import, use the separate Framecut upload archive. Verify that Framecut Studio appears before starting a new project. Reading a repository URL alone does not register the plugin.
+
+### Render and edit
+
+The plugin pins the production CLI to 0.9.9. Install Node 22+, npm, FFmpeg/ffprobe, and a compatible Chrome. First use can download the exact CLI and browser. For the Bengali starter, from the repo root:
+
+    launcher="$PWD/plugins/framecut-studio/skills/hyperframes/scripts/plugin-cli.mjs"
+    cp -R plugins/framecut-studio/skills/hyperframes/starter ./my-film
+    cd my-film
+    node "$launcher" lint .
+    node "$launcher" check . --json
+    node "$launcher" render . --strict --no-best-effort -o intro.mp4
+
+For FFmpeg-only title cards and trims, see [the production guide](plugins/framecut-studio/skills/hyperframes/references/chatgpt-production.md). Run `python3 framecut/smoke.py` from the repository root to verify portrait creation, timed captions, audio preservation and output checks. Run the manual **Framecut release check** workflow on GitHub for the browser-backed render. The supplied sample MP4s use the FFmpeg path.
+
+### Maintain or publish
+
+Framecut bundles all nine upstream skills together so cross-skill references resolve. To update, compare the next upstream release against tag v0.9.9 and review the fork changes in the plugin source. Keep the plugin version aligned with the npm release expected by its launcher. Verify the smoke test and starter before building the upload archive from committed source:
+
+    git archive --format=zip --prefix=framecut-studio/ --output=framecut-studio-plugin.zip HEAD:plugins/framecut-studio
+
+For a GitHub fork, use the supplied edition.patch from the source download (beside the repo folder). Start from upstream tag v0.9.9, run `git switch -c framecut-edition v0.9.9`, then `git am /path/to/edition.patch`, and push the branch to your fork. Use that branch when installing, or make it the fork's default. Upstream regression fixtures tracked by Git LFS are pointers in the source ZIP; a clone of the fork can retrieve them with Git LFS. The Framecut plugin and its examples ship as normal files.
+
+[OpenAI plugin packaging](https://developers.openai.com/plugins/build/plugins) · [OpenAI skills guide](https://learn.chatgpt.com/docs/build-skills) · [Upstream release](https://github.com/heygen-com/hyperframes/tree/v0.9.9)
+
+---
+
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/logo/dark.svg">

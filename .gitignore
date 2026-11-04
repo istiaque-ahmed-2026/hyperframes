@@ -201,3 +201,6 @@ chrome/
 # Python bytecode from running skill scripts
 __pycache__/
 *.pyc
+
+!.agents/plugins/
+!.agents/plugins/marketplace.json

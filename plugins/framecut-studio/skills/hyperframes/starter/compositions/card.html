@@ -1,0 +1,26 @@
+<template id="card-template">
+<style>
+@font-face {font-family: StudioBangla; src: url(assets/NotoSansBengali-Bold.ttf)}
+* {box-sizing: border-box}
+html, body {margin:0; background:#101c27}
+#root {position:relative; overflow:hidden; width:960px; height:540px; background:#101c27; color:#fff3d7; font-family:Arial,sans-serif}
+#card {position:absolute; inset:0}
+.label {position:absolute; left:96px; top:66px; color:#f4bb73; font:bold 15px monospace; letter-spacing:2px}
+h1 {position:absolute; left:92px; top:145px; margin:0; font:88px/1.5 StudioBangla,sans-serif}
+.sub {position:absolute; top:284px; left:98px; font:25px StudioBangla,sans-serif; color:#d7dddb}
+svg {position:absolute; top:68px; right:65px; width:310px; height:340px}
+.orbit {transform-origin:150px 150px; animation:wheel 4s ease-in-out both}
+@keyframes wheel {from {transform:rotate(-54deg)} to {transform:rotate(50deg)}}
+h1, .sub {animation:show .8s ease-out both}
+.sub {animation-delay:.33s}
+@keyframes show {from {opacity:0;transform:translateY(18px)} to {opacity:1;transform:translateY(0)}}
+footer {position:absolute; left:96px; right:96px; bottom:65px; border-top:1px solid #738084; padding-top:16px; display:flex; justify-content:space-between; font:14px monospace; letter-spacing:2px}
+</style>
+<section id="root" data-composition-id="card" data-width="960" data-height="540" data-duration="4">
+<div class="label">FIELD NOTES &nbsp;/&nbsp; 001</div>
+<h1>দৃশ্যপট</h1><div class="sub">রেখা থেকে গতি</div>
+<svg viewBox="0 0 300 300" aria-label="Rotating orbital diagram"><g class="orbit" fill="none" stroke="#f4bb73" stroke-width="2">
+<circle cx="150" cy="150" r="120"/><ellipse cx="150" cy="150" rx="120" ry="54"/><ellipse cx="150" cy="150" rx="54" ry="120"/><circle cx="150" cy="30" r="9" fill="#f4bb73"/></g><circle cx="150" cy="150" r="6" fill="#fff3d7"/></svg>
+<footer><span>MOTION STUDIES</span><span>01 / 04s</span></footer>
+</section>
+</template>
