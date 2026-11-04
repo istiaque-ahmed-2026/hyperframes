@@ -13,6 +13,14 @@ Open the extracted source folder in a terminal with Codex CLI. From the reposito
 
 For installation from GitHub, use `istiaque-ahmed-2026/hyperframes` in place of the dot, with `--ref main`. In a compatible ChatGPT desktop installation, use the local marketplace and select Framecut Studio. For a host with plugin ZIP import, use the separate Framecut upload archive. Verify that Framecut Studio appears before starting a new project. Reading a repository URL alone does not register the plugin.
 
+### Standalone skill package
+
+For a host that imports individual Agent Skills, use `framecut-video-skill.zip`. It contains one root `framecut-video/SKILL.md` and its internal `bundle/` of references and helpers. Select the standalone skill in a compatible Skills interface, or give its repository source and request installation through the host-supported skill installer. Verify that `framecut-video` appears in the host before claiming installation.
+
+Build both archives from committed source with `python3 framecut/package.py --out-dir /path/to/output`. The output includes SHA-256 checksums. A standalone skill, a plugin archive and the full repository have different roots; use the archive intended for the receiving interface.
+
+Read the [review record](framecut/REVIEW.bn.md) for tested behavior and remaining checks. Host acceptance and third-party service access depend on that host's current features and permissions.
+
 ### Render and edit
 
 The plugin pins the production CLI to 0.9.9. Install Node 22+, npm, FFmpeg/ffprobe, and a compatible Chrome. First use can download the exact CLI and browser. For the Bengali starter, from the repo root:
@@ -24,11 +32,11 @@ The plugin pins the production CLI to 0.9.9. Install Node 22+, npm, FFmpeg/ffpro
     node "$launcher" check . --json
     node "$launcher" render . --strict --no-best-effort -o intro.mp4
 
-For FFmpeg-only title cards and trims, see [the production guide](plugins/framecut-studio/skills/hyperframes/references/chatgpt-production.md). Run `python3 framecut/smoke.py` from the repository root to verify portrait creation, timed captions, audio preservation and output checks. Run the manual **Framecut release check** workflow on GitHub for the browser-backed render. The supplied sample MP4s use the FFmpeg path.
+For FFmpeg-only title cards and trims, see [the production guide](plugins/framecut-studio/skills/hyperframes/references/chatgpt-production.md). Run `python3 framecut/check-package.py` to verify the upstream inventory. Run `python3 framecut/smoke.py` from the repository root to verify portrait creation, timed captions, audio preservation and output checks. The **Framecut release check** workflow runs on relevant pushes and pull requests and can also be started manually on GitHub for the browser-backed render. The supplied sample MP4s use the FFmpeg path.
 
 ### Maintain or publish
 
-Framecut bundles all nine upstream skills together so cross-skill references resolve. To update, compare the next upstream release against tag v0.9.9 and review the fork changes in the plugin source. Keep the plugin version aligned with the npm release expected by its launcher. Verify the smoke test and starter before building the upload archive from committed source:
+Framecut bundles all nine upstream skills together so cross-skill references resolve. To update, compare the next upstream release against tag v0.9.9 and review the fork changes in the plugin source. Bump the Framecut plugin version for each release. Pin the upstream CLI separately in plugins/framecut-studio/runtime.json. Verify the smoke test and starter before building the upload archive from committed source:
 
     git archive --format=zip --prefix=framecut-studio/ --output=framecut-studio-plugin.zip HEAD:plugins/framecut-studio
 

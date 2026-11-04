@@ -4,3 +4,8 @@ The nine bundled skills and launcher originate from heygen-com/hyperframes at
 This edition modifies the main skill, installation guidance and launcher.
 It adds a ChatGPT workflow, FFmpeg helper and Bengali starter composition.
 The Noto font has separate attribution in skills/hyperframes/starter/assets/FONT-LICENSE.txt.
+
+The security revision adds shared trust rules, transparent provider authorization,
+an independent runtime pin, scoped project credential loading, sandbox-preserving
+map capture, and local media input restrictions. The full adapted-file inventory
+is recorded in framecut/upstream-inventory.json in the source repository.

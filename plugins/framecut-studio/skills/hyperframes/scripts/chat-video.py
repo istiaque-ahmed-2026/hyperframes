@@ -9,9 +9,13 @@ import shutil
 import subprocess
 import tempfile
 
+LOCAL_INPUT = ["-protocol_whitelist", "file,pipe", "-format_whitelist", "mov,matroska,webm,avi,mpeg,mpegts,flv,ogg"]
+
+BUNDLED_FONT = Path(__file__).resolve().parents[1] / "starter/assets/NotoSansBengali-Bold.ttf"
+
 
 def probe(path):
-    cmd = ["ffprobe", "-v", "error", "-show_streams", "-show_format", "-of", "json", str(path)]
+    cmd = ["ffprobe", "-v", "error", "-show_streams", "-show_format", "-of", "json", *LOCAL_INPUT, str(path)]
     return json.loads(subprocess.check_output(cmd))
 
 
@@ -30,6 +34,8 @@ def ass_text(text):
 
 
 def card_script(args, folder):
+    if "," in args.font:
+        raise ValueError("font family must not contain a comma")
     w, h = (720, 1280) if args.portrait else (1280, 720)
     end = round(args.duration * 100)
     end_time = f"{end // 360000}:{end // 6000 % 60:02}:{end // 100 % 60:02}.{end % 100:02}"
@@ -56,12 +62,18 @@ def card_script(args, folder):
 def cut_args(args, folder):
     source = args.source.resolve(strict=True)
     meta = probe(source)
-    if not any(s["codec_type"] == "video" for s in meta["streams"]):
+    if not any(s["codec_type"] == "video" and not s.get("disposition", {}).get("attached_pic") for s in meta["streams"]):
         raise ValueError("source has no video stream")
-    length = float(meta["format"]["duration"])
+    video = next(
+        stream for stream in meta["streams"]
+        if stream["codec_type"] == "video" and not stream.get("disposition", {}).get("attached_pic")
+    )
+    if video.get("color_transfer") in {"smpte2084", "arib-std-b67"} or video.get("color_primaries") == "bt2020":
+        raise ValueError("HDR/wide-gamut footage needs the HyperFrames color-managed workflow")
+    length = float(video.get("duration", meta["format"]["duration"]))
     if not (0 <= args.start < args.end <= length + .001):
         raise ValueError(f"choose a range within 0–{length:g} seconds")
-    cmd = ["-ss", str(args.start), "-i", str(source), "-t", str(args.end-args.start),
+    cmd = ["-ss", str(args.start), *LOCAL_INPUT, "-i", str(source), "-t", str(args.end-args.start),
            "-map", "0:V:0", "-map", "0:a:0?"]
     filters = ["pad=ceil(iw/2)*2:ceil(ih/2)*2"]
     if args.srt:
@@ -86,7 +98,7 @@ def main():
     cut.add_argument("--end", type=positive, required=True)
     cut.add_argument("--srt", type=Path, help="cue times relative to the edited clip")
     for sub in (card, cut):
-        sub.add_argument("--font-file", type=Path, help="local font to embed during rendering")
+        sub.add_argument("--font-file", type=Path, default=BUNDLED_FONT, help="local font (defaults to bundled Noto Sans Bengali)")
         sub.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
     out = args.out.absolute()

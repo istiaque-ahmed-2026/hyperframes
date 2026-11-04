@@ -3,6 +3,8 @@ name: figma
 description: Bring Figma into a HyperFrames video - rendered assets, brand tokens, components, storyboard frames as reconstructed motion (frames read as states, not slides), shaders and connector-assisted motion. Use when the person pastes a figma.com link or asks to use a Figma design, frame, logo or brand.
 ---
 
+Read [Framecut trust and permissions](../hyperframes/references/security.md) before executing this workflow.
+
 **Plugin installs:** Before setup or freshness commands, follow [plugin execution rules](../hyperframes/references/plugin-installation.md) when this skill is inside a HyperFrames plugin.
 
 # Figma → HyperFrames
@@ -13,12 +15,12 @@ Every import happens at build time and freezes a local file with its source reco
 
 `FIGMA_TOKEN` in the shell or the project `.env`. Check it exists before the first command; if not, tell the person how to make one and stop: figma.com → Settings → Security → Personal access tokens, read-only **File content** and **File metadata**, plus **Library content** for `tokens` on non-Enterprise plans. They set it themselves; never ask them to paste it into the chat.
 
-| Error | Meaning |
-| --- | --- |
-| `BAD_TOKEN` (401) | Expired or revoked: make a new one |
-| `FORBIDDEN` (403) | The message names the missing scope, or the file isn't visible to the account |
-| `REQUIRES_ENTERPRISE` (403, variables) | Not a failure: the published-styles fallback already ran |
-| `RATE_LIMITED` (429) | Already retried with backoff; wait a minute or import fewer nodes per call |
+| Error                                  | Meaning                                                                       |
+| -------------------------------------- | ----------------------------------------------------------------------------- |
+| `BAD_TOKEN` (401)                      | Expired or revoked: make a new one                                            |
+| `FORBIDDEN` (403)                      | The message names the missing scope, or the file isn't visible to the account |
+| `REQUIRES_ENTERPRISE` (403, variables) | Not a failure: the published-styles fallback already ran                      |
+| `RATE_LIMITED` (429)                   | Already retried with backoff; wait a minute or import fewer nodes per call    |
 
 ## Commands
 

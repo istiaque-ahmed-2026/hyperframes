@@ -226,12 +226,11 @@ window.__project=function(){ return {
 }; };
 </script></body></html>`;
 
-// --no-sandbox is intentional: trusted Source-time bake, headless, often root/CI; deps are version-pinned above.
+// Use the browser sandbox. Report unsupported execution environments to the host.
 const browser = await puppeteer.launch({
   executablePath: resolveChrome(),
   headless: true,
   args: [
-    "--no-sandbox",
     "--hide-scrollbars",
     "--use-gl=angle",
     "--use-angle=swiftshader",

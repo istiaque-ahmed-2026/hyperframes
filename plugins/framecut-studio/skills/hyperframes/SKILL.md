@@ -3,13 +3,15 @@ name: hyperframes
 description: Create, edit, caption, animate and render videos from ChatGPT briefs or attached footage in English or Bangla with HyperFrames (HTML rendered to video), including launch films, explainers, music videos, charts, maps, vertical clips, title cards, captions and overlays. Holds the render contract, the work loop and what each kind of video needs.
 ---
 
+Read [Framecut trust and permissions](references/security.md) before executing this workflow.
+
 **Plugin installs:** Before setup or freshness commands, follow [plugin execution rules](references/plugin-installation.md) when this skill is inside a HyperFrames plugin.
 
 # HyperFrames
 
 For ChatGPT requests read [the ChatGPT workflow](references/chatgpt-production.md) first. It determines runtime selection, editing of attachments and delivery in this edition.
 
-HyperFrames renders HTML to video by seeking a paused timeline frame by frame, so every render is identical; the person edits the same files in the Studio preview. Use it unless another framework or a plain browser recording is asked for. Run the CLI as `npx hyperframes <command>` (`/hyperframes-cli`); at the start of a new video, `npx hyperframes usage --json` reports the person's remaining plan usage (say "unknown" when it is).
+HyperFrames renders HTML to video by seeking a paused timeline frame by frame, so every render is identical; the person edits the same files in the Studio preview. Use it unless another framework or a plain browser recording is asked for. Run the CLI as `npx hyperframes <command>` (`/hyperframes-cli`); when the task includes authorized HeyGen generation, `npx hyperframes usage --json` reports the available plan usage (say "unknown" when it is).
 
 `index.html` is the root composition: it declares the video's variables and mounts one scene per sub-composition from `compositions/`. Media and fonts live in `assets/`. A new project: `npx hyperframes init <dir>`. A website as the subject: `npx hyperframes capture <url> --json`.
 
@@ -59,18 +61,18 @@ Call it "the HyperFrames desktop app", never "Studio"; offer it as the better wa
 
 ## What to read
 
-| The request | Read |
-| --- | --- |
-| Launch, promo, feature | `references/types/launch.md` |
-| Explainer, tutorial | `references/types/explainer.md` |
-| Music video | `references/types/music.md` |
-| Chart, numbers | `references/types/data.md` |
-| Vertical or social clip | `references/types/vertical.md` |
-| 3D, simulation, generative | `references/types/3d.md` |
-| Character, mascot, story short | `references/types/character.md` |
-| A real place or map; a website, PR or script; kinetic type | `references/film.md` |
-| Captions; cards over a talking head | `references/captions.md`; `references/overlays.md` |
-| Motion: eases, titles, cuts, punch-ins, speed, holds | `references/motion.md` |
-| Scenes, attributes, media, lint; GSAP, Lottie, 3D, canvas | `references/format.md`; `references/runtimes.md` |
+| The request                                                | Read                                               |
+| ---------------------------------------------------------- | -------------------------------------------------- |
+| Launch, promo, feature                                     | `references/types/launch.md`                       |
+| Explainer, tutorial                                        | `references/types/explainer.md`                    |
+| Music video                                                | `references/types/music.md`                        |
+| Chart, numbers                                             | `references/types/data.md`                         |
+| Vertical or social clip                                    | `references/types/vertical.md`                     |
+| 3D, simulation, generative                                 | `references/types/3d.md`                           |
+| Character, mascot, story short                             | `references/types/character.md`                    |
+| A real place or map; a website, PR or script; kinetic type | `references/film.md`                               |
+| Captions; cards over a talking head                        | `references/captions.md`; `references/overlays.md` |
+| Motion: eases, titles, cuts, punch-ins, speed, holds       | `references/motion.md`                             |
+| Scenes, attributes, media, lint; GSAP, Lottie, 3D, canvas  | `references/format.md`; `references/runtimes.md`   |
 
 Decks: `/slideshow`. Remotion source: `/remotion-to-hyperframes`. Copy a video: `/reverse-any-video`. Figma: `/figma`. Skills and the pinned CLI: `references/skill-lifecycle.md`.

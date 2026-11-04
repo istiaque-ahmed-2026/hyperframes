@@ -119,3 +119,20 @@ test("installed helper keeps cwd, arguments, release environment and exit code",
   });
   assert.equal(readFileSync(join(root, "plugin.json"), "utf8"), before);
 });
+
+test("Framecut upgrades keep the independent pinned runtime", (t) => {
+  const { root } = fixture(t, ".codex-plugin/plugin.json");
+  writeFileSync(
+    join(root, ".codex-plugin/plugin.json"),
+    JSON.stringify({
+      name: "framecut-studio",
+      version: "1.0.1",
+    }),
+  );
+  writeFileSync(join(root, "runtime.json"), JSON.stringify({ hyperframes: "0.9.9" }));
+  assert.equal(pluginVersion(root), "0.9.9");
+  writeFileSync(join(root, "runtime.json"), JSON.stringify({ hyperframes: "latest" }));
+  assert.throws(() => pluginVersion(root), /Invalid pinned/);
+  rmSync(join(root, "runtime.json"));
+  assert.throws(() => pluginVersion(root), /runtime.json/);
+});

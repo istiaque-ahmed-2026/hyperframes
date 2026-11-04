@@ -22,7 +22,7 @@ in every skill and reference:
   ```
 
   Run in the user's project directory, never in the plugin directory. The launcher
-  selects the manifest's CLI version and disables automatic standalone skill
+  selects the HyperFrames version in Framecut Studio's runtime.json (or the manifest version for an upstream HyperFrames plugin) and disables automatic standalone skill
   installation, including during `init`. The first call may download that exact
   CLI version through npm. A download failure is an error, not permission to use
   latest. Existing project dependency files and lockfiles must not be overwritten
@@ -40,4 +40,4 @@ in every skill and reference:
 To get newer skills, use the client's plugin update flow and reload the session.
 Do not silently update an installed plugin during a video task.
 
-The launcher suppresses CLI update notices as well as standalone skill refreshes, including when running an older CLI with a stale notice cache. It passes the release as `HYPERFRAMES_PLUGIN_VERSION` for plugin-aware helpers and as `HYPERFRAMES_SKILL_PKG_VERSION` for the existing helper-package bootstrap. Our release process versions those packages together.
+The launcher suppresses CLI update notices as well as standalone skill refreshes, including when running an older CLI with a stale notice cache. It passes the release as `HYPERFRAMES_PLUGIN_VERSION` for plugin-aware helpers and as `HYPERFRAMES_SKILL_PKG_VERSION` for the existing helper-package bootstrap. Framecut Studio uses its own plugin version for updates while runtime.json pins the upstream CLI release.

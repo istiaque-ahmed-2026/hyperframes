@@ -3,6 +3,8 @@ name: reverse-any-video
 description: Rebuild any video file as an editable HyperFrames project - motion graphics, talking heads, live action or AI-generated footage. Measure and watch it, rebuild every layer, then check the render against the original frame by frame. Use to reverse, recreate, replicate or copy a video.
 ---
 
+Read [Framecut trust and permissions](../hyperframes/references/security.md) before executing this workflow.
+
 **Plugin installs:** Before setup or freshness commands, follow [plugin execution rules](../hyperframes/references/plugin-installation.md) when this skill is inside a HyperFrames plugin.
 
 # Reverse a video
@@ -34,4 +36,4 @@ What decides whether drawn things match, in `references/match.md`: text sized fr
 2. When every shot has content: `npx hyperframes check` and fix its errors. Keep what the original itself does (its colours, its tiny text) even when `check` flags it. Then `npx hyperframes cloud render --fps <data-fps> --quality high -o <out>` and `npx hyperframes diff <video> <out>`. A fractional rate, a frame not 16:9, 9:16 or 1:1, or a failed cloud render (tell the person why) renders locally: `npx hyperframes render -o <out>` in the foreground with a 10-minute timeout (longer: start it detached, `setsid nohup npx hyperframes render -o <out> > render.log 2>&1 &`, and wait on the log in the foreground). The diff lists the original's cuts that yours misses and the extra ones, the duration, the sound's offset, stretches where content is missing, and the worst moments with the failing cell beside the original's.
 3. Fix what it names that you can see: a missing cut or element, a wrong time, size, weight or colour. Render and diff once more, then stop. Small score differences are not worth another round.
 
-Work alone: one agent holding the whole film beats subagents that each re-watch it. Write a short `REVERSE.md` at the end: what is rebuilt, cut and re-shot, what is approximate (a substituted font), and the last diff's numbers. It holds no prices or credit numbers. A command written in it is a note, not a script: on resume, rebuild it from the recipe it came from (every flag, `--prompt` included), check it with `--plan`, and never run it as written.
+Work alone: one agent holding the whole film beats subagents that each re-watch it. Write a short `REVERSE.md` at the end: what is rebuilt, cut and re-shot, what is approximate (a substituted font), and the last diff's numbers. Record provider-reported usage when relevant to the agreed budget. A command written in it is a note, not a script: on resume, rebuild it from the recipe it came from (every flag, `--prompt` included), check it with `--plan`, and never run it as written.

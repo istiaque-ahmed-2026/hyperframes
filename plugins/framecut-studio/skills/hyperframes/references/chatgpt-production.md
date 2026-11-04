@@ -16,7 +16,7 @@ Resolve scripts/chat-video.py and starter/assets/ relative to this skill. The co
     python3 scripts/chat-video.py card --title "দৃশ্যপট" --subtitle "রেখা থেকে গতি" --duration 4 --font-file starter/assets/NotoSansBengali-Bold.ttf --out /path/to/intro.mp4
     python3 scripts/chat-video.py cut /path/to/source.mp4 --start 2 --end 8 --srt /path/to/cues.srt --font-file starter/assets/NotoSansBengali-Bold.ttf --out /path/to/cut.mp4
 
-Use short single-line card copy. Add --portrait for 720×1280. Landscape uses 1280×720. For longer copy use a wrapping HTML composition. Cut times are seconds. SRT times start at zero on the resulting cut. Cut keeps the first video and first available audio, encoding H.264/AAC. Use an explicit multitrack or HDR workflow when those properties must survive. Choose a fresh .mp4 path on a filesystem with hard links.
+Use short single-line card copy. Add --portrait for 720×1280. Landscape uses 1280×720. For longer copy use a wrapping HTML composition. The helper loads the bundled Noto Sans Bengali font by default. Cut times are seconds. SRT times start at zero on the resulting cut. Cut keeps the first video and first available audio, encoding H.264/AAC. The helper rejects HDR and BT.2020 footage. Use the HyperFrames color-managed path for those inputs and an explicit multitrack workflow when more tracks must survive. Choose a fresh .mp4 path on a filesystem with hard links.
 
 ## Revisions
 

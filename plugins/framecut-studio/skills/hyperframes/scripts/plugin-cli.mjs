@@ -26,6 +26,13 @@ export function pluginVersion(pluginRoot = root) {
     ) {
       throw new Error(`Invalid HyperFrames plugin release: ${file}`);
     }
+    if (manifest.name === "framecut-studio") {
+      const runtime = JSON.parse(readFileSync(join(pluginRoot, "runtime.json"), "utf8"));
+      if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(runtime.hyperframes ?? "")) {
+        throw new Error("Invalid pinned HyperFrames runtime in runtime.json");
+      }
+      return runtime.hyperframes;
+    }
     return manifest.version;
   }
   throw new Error(

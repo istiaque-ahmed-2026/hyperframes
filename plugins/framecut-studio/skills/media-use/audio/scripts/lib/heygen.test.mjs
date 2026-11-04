@@ -229,18 +229,19 @@ test("an expired or foreign OAuth login never falls back to a saved API wallet",
   });
 });
 
-test("loadEnvFromDir skips a .env folder and loads the .env file above it", () => {
-  const root = mkdtempSync(join(tmpdir(), "heygen-env-"));
-  const project = join(root, "project");
-  mkdirSync(join(project, ".env"), { recursive: true });
-  writeFileSync(join(root, ".env"), "MEDIA_USE_ENV_DIR_TEST=from-parent\n");
-  try {
-    loadEnvFromDir(project);
-    assert.equal(process.env.MEDIA_USE_ENV_DIR_TEST, "from-parent");
-  } finally {
-    delete process.env.MEDIA_USE_ENV_DIR_TEST;
-    rmSync(root, { recursive: true, force: true });
-  }
+test("loadEnvFromDir does not load unrelated parent credentials", () => {
+  withCleanHeygenEnv(() => {
+    const root = mkdtempSync(join(tmpdir(), "heygen-env-"));
+    const project = join(root, "project");
+    mkdirSync(join(project, ".env"), { recursive: true });
+    writeFileSync(join(root, ".env"), "HEYGEN_API_KEY=hg_parent\n");
+    try {
+      loadEnvFromDir(project);
+      assert.equal(process.env.HEYGEN_API_KEY, undefined);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
 });
 
 test("a project's .env cannot name the HeyGen base, so a shell key never leaves for its host", () => {
@@ -253,7 +254,7 @@ test("a project's .env cannot name the HeyGen base, so a shell key never leaves 
     try {
       process.env.HEYGEN_API_KEY = "hg_shell_real";
       loadEnvFromDir(project);
-      assert.equal(process.env.MEDIA_USE_ENV_BASE_TEST, "loaded");
+      assert.equal(process.env.MEDIA_USE_ENV_BASE_TEST, undefined);
       assert.equal(process.env.HEYGEN_API_BASE, undefined);
       assert.equal(process.env.HEYGEN_ALLOW_HTTP, undefined);
       assert.equal(heygenBase(), "https://api.heygen.com/v3");
@@ -414,4 +415,26 @@ test("a refused HyperFrames-plan call becomes one line with the billing command"
     heygenMessage({ status: 400, body: JSON.stringify({ error: { message: "bad voice" } }) }),
     "bad voice",
   );
+});
+
+test("project env permits API keys but cannot redirect OAuth credentials", () => {
+  withCleanHeygenEnv(() => {
+    const project = mkdtempSync(join(tmpdir(), "framecut-env-"));
+    try {
+      writeFileSync(
+        join(project, ".env"),
+        [
+          "HEYGEN_API_KEY=hg_project",
+          "HYPERFRAMES_OAUTH_TOKEN_URL=https://untrusted.invalid/token",
+          "HYPERFRAMES_CONFIG_DIR=/unrelated",
+        ].join("\n"),
+      );
+      loadEnvFromDir(project);
+      assert.equal(process.env.HEYGEN_API_KEY, "hg_project");
+      assert.equal(process.env.HYPERFRAMES_OAUTH_TOKEN_URL, undefined);
+      assert.equal(process.env.HYPERFRAMES_CONFIG_DIR, undefined);
+    } finally {
+      rmSync(project, { recursive: true, force: true });
+    }
+  });
 });

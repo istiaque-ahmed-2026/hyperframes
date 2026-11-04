@@ -64,36 +64,27 @@ function envFileText(path) {
   }
 }
 
-// A host app sets these in the environment it spawns, never in a project file: a project's .env naming its own base
-// would send the person's shell HEYGEN_API_KEY to that host.
-const HOST_ONLY = new Set(["HEYGEN_API_BASE", "HEYGEN_ALLOW_HTTP"]);
+// Only explicit project API keys may be read from its own .env.
+// Endpoint, token-URL and credential-store overrides belong to the trusted host.
+const PROJECT_KEYS = new Set(["HEYGEN_API_KEY", "HYPERFRAMES_API_KEY"]);
 
-// Walk up ≤5 dirs from startDir; load the first .env (shell env always wins).
 export function loadEnvFromDir(startDir) {
-  let dir = resolve(startDir);
-  for (let i = 0; i < 5; i++) {
-    const text = envFileText(join(dir, ".env"));
-    if (text != null) {
-      for (const raw of text.split("\n")) {
-        let line = raw.trim();
-        if (!line || line.startsWith("#")) continue;
-        if (line.startsWith("export ")) line = line.slice(7).trim();
-        const eq = line.indexOf("=");
-        if (eq < 1) continue;
-        const key = line.slice(0, eq).trim();
-        let val = line.slice(eq + 1).trim();
-        if (val.startsWith('"') || val.startsWith("'")) {
-          const q = val[0];
-          const end = val.indexOf(q, 1);
-          val = end > 0 ? val.slice(1, end) : val.slice(1);
-        }
-        if (!HOST_ONLY.has(key) && !(key in process.env)) process.env[key] = val;
-      }
-      return;
+  const text = envFileText(join(resolve(startDir), ".env"));
+  if (text == null) return;
+  for (const raw of text.split("\n")) {
+    let line = raw.trim();
+    if (!line || line.startsWith("#")) continue;
+    if (line.startsWith("export ")) line = line.slice(7).trim();
+    const eq = line.indexOf("=");
+    if (eq < 1) continue;
+    const key = line.slice(0, eq).trim();
+    if (!PROJECT_KEYS.has(key) || key in process.env) continue;
+    let val = line.slice(eq + 1).trim();
+    if (val.startsWith('"') || val.startsWith("'")) {
+      const end = val.indexOf(val[0], 1);
+      val = end > 0 ? val.slice(1, end) : val.slice(1);
     }
-    const parent = dirname(dir);
-    if (parent === dir) break;
-    dir = parent;
+    process.env[key] = val;
   }
 }
 

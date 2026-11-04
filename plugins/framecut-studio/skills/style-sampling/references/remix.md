@@ -58,4 +58,4 @@ The person's message carries what it carries. Ask once, together, only what is s
 ## 8. Reply and hand back
 
 - Say what the episode is, its length (and, for a short cut, that the full episode is one ask away), every stand-in, every check that failed and why, and the footage licence table. Update the project's `CLAUDE.md` with how it was made.
-- Keep LOG.md (each step and how long, no prices or credit numbers) and GAPS.md (where the template was missing, unclear or wrong, with file and section) in the project root. GAPS.md is how the template gets better: never skip it.
+- Keep LOG.md (each step, elapsed time and any provider-reported usage) and GAPS.md (where the template was missing, unclear or wrong, with file and section) in the project root. GAPS.md is how the template gets better: never skip it.

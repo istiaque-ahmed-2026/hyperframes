@@ -24,6 +24,11 @@ with tempfile.TemporaryDirectory() as directory:
     intro, source, cut = [d / name for name in ("intro.mp4", "source.mp4", "cut.mp4")]
     run(*HELPER, "card", "--portrait", "--duration", "1", "--title", "আলো",
         "--font-file", SKILL / "starter/assets/NotoSansBengali-Bold.ttf", "--out", intro)
+    default_font = d / "default.mp4"
+    run(*HELPER, "card", "--portrait", "--duration", "1", "--title", "আলো", "--out", default_font)
+    explicit_frames = run("ffmpeg", "-v", "error", "-i", intro, "-f", "framemd5", "-")
+    default_frames = run("ffmpeg", "-v", "error", "-i", default_font, "-f", "framemd5", "-")
+    assert explicit_frames == default_frames, "Bundled default font differs from explicit font"
     video = streams(intro)["streams"][0]
     assert (video["width"], video["height"], video["nb_frames"]) == (720,1280,"30")
     run("ffmpeg", "-v", "error", "-i", intro, "-f", "lavfi", "-i", "sine=frequency=440:duration=1",
@@ -41,4 +46,16 @@ with tempfile.TemporaryDirectory() as directory:
     bad = d / "bad.mp4"
     assert subprocess.run([*HELPER,"cut",source,"--end","9","--out",bad],capture_output=True).returncode != 0
     assert not bad.exists()
-print("Portrait render, captioned trim, audio, decode, overwrite and range checks passed.")
+    hdr = d / "hdr.mp4"
+    run("ffmpeg", "-v", "error", "-i", intro, "-c:v", "libx264",
+        "-x264-params", "colorprim=bt2020:transfer=smpte2084:colormatrix=bt2020nc", hdr)
+    assert streams(hdr)["streams"][0]["color_transfer"] == "smpte2084"
+    rejected = subprocess.run([*HELPER, "cut", hdr, "--end", "0.5", "--out", bad], capture_output=True)
+    assert rejected.returncode != 0 and b"color-managed" in rejected.stderr
+    assert not bad.exists()
+    playlist = d / "untrusted.mp4"
+    playlist.write_text("#EXTM3U\n#EXT-X-TARGETDURATION:1\n#EXTINF:1,\nhttps://example.invalid/footage.ts\n#EXT-X-ENDLIST\n")
+    rejected = subprocess.run([*HELPER, "cut", playlist, "--end", "0.5", "--out", bad], capture_output=True)
+    assert rejected.returncode != 0 and b"whitelist" in rejected.stderr
+    assert not bad.exists()
+print("Portrait render, captioned trim, audio, default Bengali font, HDR and playlist rejection, decode, overwrite and range checks passed.")

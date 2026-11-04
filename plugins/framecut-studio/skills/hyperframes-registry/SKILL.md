@@ -3,6 +3,8 @@ name: hyperframes-registry
 description: About 450 ready-made HyperFrames blocks and components installed as editable source - transitions, overlays, titles, kinetic type, captions, charts, map overlays, 3D, camera moves. Use it before hand-building any named visual (CRT scanlines, glitch, film grain, a chart); also for hyperframes add and catalog.
 ---
 
+Read [Framecut trust and permissions](../hyperframes/references/security.md) before executing this workflow.
+
 **Plugin installs:** Before setup or freshness commands, follow [plugin execution rules](../hyperframes/references/plugin-installation.md) when this skill is inside a HyperFrames plugin.
 
 # HyperFrames registry
@@ -27,22 +29,22 @@ Tiers, `dropped` and `unindexed`, stale indexes, offline behaviour: `references/
 
 ## What's in it
 
-| Blocks: a scene with its own timeline | Examples |
-| --- | --- |
-| Transitions | `beat-freeze-cut`, `chromatic-radial-split`, `cinematic-zoom` |
-| Overlays and lower thirds | `camcorder-hud`, `editorial-flash-overlay`, `lt-clean-bar` |
-| Title cards and kinetic type | `canopy-part-title`, `code-slice-hero` |
-| Social, chat and UI cards | `ai-chat-reveal`, `chatgpt-exchange` |
-| Code, charts, data and maps | `code-diff`, `bar-chart-race`, `data-chart` |
-| 3D, shader and backgrounds | `app-showcase`, `aurora`, `blob` |
+| Blocks: a scene with its own timeline | Examples                                                      |
+| ------------------------------------- | ------------------------------------------------------------- |
+| Transitions                           | `beat-freeze-cut`, `chromatic-radial-split`, `cinematic-zoom` |
+| Overlays and lower thirds             | `camcorder-hud`, `editorial-flash-overlay`, `lt-clean-bar`    |
+| Title cards and kinetic type          | `canopy-part-title`, `code-slice-hero`                        |
+| Social, chat and UI cards             | `ai-chat-reveal`, `chatgpt-exchange`                          |
+| Code, charts, data and maps           | `code-diff`, `bar-chart-race`, `data-chart`                   |
+| 3D, shader and backgrounds            | `app-showcase`, `aurora`, `blob`                              |
 
-| Components: a snippet merged into your scene | Examples |
-| --- | --- |
-| Motion primitives and text effects | `agent-cursor`, `blur-in`, `bottom-up-letters` |
-| Caption styles | `caption-clip-wipe`, `caption-editorial-emphasis` |
-| Camera moves | `camera-shake`, `camera-scan-gate` |
-| Product demo and UI props | `before-after-wipe`, `browser-device-stage` |
-| Textures, particles and effects | `ascii-render-pass`, `grain-overlay` |
+| Components: a snippet merged into your scene | Examples                                          |
+| -------------------------------------------- | ------------------------------------------------- |
+| Motion primitives and text effects           | `agent-cursor`, `blur-in`, `bottom-up-letters`    |
+| Caption styles                               | `caption-clip-wipe`, `caption-editorial-emphasis` |
+| Camera moves                                 | `camera-shake`, `camera-scan-gate`                |
+| Product demo and UI props                    | `before-after-wipe`, `browser-device-stage`       |
+| Textures, particles and effects              | `ascii-render-pass`, `grain-overlay`              |
 
 ## Wiring
 

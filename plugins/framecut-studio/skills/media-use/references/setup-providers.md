@@ -24,9 +24,7 @@ the host's key, so it never enters the agent's environment, and every
 call is charged to that key's API credits. The `heygen` CLI honours the same
 variables, so `resolve` (bgm/sfx/image/icon/voice/avatar-video) and the audio
 engine's TTS all go through the host. With host access, skip CLI install and
-sign-in, prefer the host's own HeyGen tools where it has them, never fall back
-to a local or third-party generator on your own, and relay a refused call's
-message (for example "add a key in Settings > Account") as written.
+sign-in, prefer the host's own HeyGen tools where it has them, respect the selected provider and explain a refused call. Use local alternatives when authorized and suitable.
 
 ## Providers
 
@@ -51,9 +49,7 @@ in `references/operations.md`).
 | video     | heygen avatar video HyperFrames-authenticated path (sign-in nudge on auth failure); optional local LTX (`videogen` ladder). Image-to-video / photo-avatar / dub stay manual `heygen` recipes |
 
 Local Kokoro (voice), mflux (image), and LTX (video) run on-device (free,
-private, offline once cached). The `codex` CLI remains the ChatGPT-sub image
-upsell. Paid calls follow the Credits rule in `SKILL.md`: no prices unasked,
-and a question only when a step won't fit.
+private, offline once cached). Choose providers based on the user's preference and available capabilities. Paid calls follow the authorization and budget rules in SKILL.md, including transparent estimates and actual usage when available.
 
 To force a specific generator (e.g. a user says "make this image with codex"),
 pass `--provider codex`: it pins resolution to that provider and skips the

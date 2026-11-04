@@ -1,6 +1,6 @@
 {
   "name": "framecut-studio",
-  "version": "0.9.9",
+  "version": "1.0.1",
   "description": "Create and edit videos with HyperFrames, Bengali typography, captioned trims and export checks.",
   "license": "Apache-2.0",
   "skills": "./skills/",
